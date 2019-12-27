@@ -1,27 +1,27 @@
 # Writing High-Performance Swift Code
 
-- Enabling Optimizations
-- Whole Module Optimizations
-- Reducing Dynamic Dispatch
-	- Dynamic Dispatch
+- [Enabling Optimizations](#enabling-optimizations)
+- [Whole Module Optimizations](#whole-module-optimizations)
+- [Reducing Dynamic Dispatch](#reducing-dynamic-dispatch)
+	- [Dynamic Dispatch](#dynamic-dispatch)
 	- Advice: Use 'final' when you know the declaration does not need to be overridden
 	- Advice: Use 'private' and 'fileprivate' when declaration does not need to be accessed outside of file
-- Using Container Types Efficiently
+- [Using Container Types Efficiently](#using-container-types-efficiently)
 	- Advice: Use value types in Array
 	- Advice: Use ContiguousArray with reference types when NSArray bridging is unnecessary
 	- Advice: Use inplace mutation instead of object-reassignment
-- Unchecked operations
+- [Unchecked operations](#unchecked-operations)
 	- Advice: Use unchecked integer arithmetic when you can prove that overflow cannot occur
-- Generics
+- [Generics](#generics)
 	- Advice: Put generic declarations in the same module where they are used
-- The cost of large Swift values
+- [The cost of large Swift values](#the-cost-of-large-swift-values)
 	- Advice: Use copy-on-write semantics for large values
-- Unsafe code
+- [Unsafe code](#unsafe-code)
 	- Advice: Use unmanaged references to avoid reference counting overhead
-- Protocols
+- [Protocols](#protocols)
 	- Advice: Mark protocols that are only satisfied by classes as class-protocols
-- Unsupported Optimization Attributes
-- Footnotes
+- [Unsupported Optimization Attributes](#unsupported-optimization-attributes)
+- [Footnotes](#footnotes)
 
 The following document is a gathering of various tips and tricks for writing high-performance Swift code. The intended audience of this document is compiler and standard library developers.
 
