@@ -1,4 +1,4 @@
-# Writing High-Performance Swift Code
+# [Writing High-Performance Swift Code](https://github.com/apple/swift/blob/master/docs/OptimizationTips.rst)
 
 - [Enabling Optimizations](#enabling-optimizations)
 - [Whole Module Optimizations](#whole-module-optimizations)
