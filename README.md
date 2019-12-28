@@ -103,7 +103,7 @@ func usingAnA(_ a: A) {
 
 > In Swift, dynamic dispatch defaults to indirect invocation through a vtable [1]. If one attaches the dynamic keyword to the declaration, Swift will emit calls via Objective-C message send instead. In both cases this is slower than a direct function call because it prevents many compiler optimizations [2] in addition to the overhead of performing the indirect call itself. In performance critical code, one often will want to restrict this dynamic behavior.
 
-在 Swift 中，动态调度默认通过一个 vtable[1]（虚函数表）间接调用。如果使用一个 dynamic 关键字来声明，Swift 将会通过 Objective-C 消息转发来调用。这两种情况中，这种情况会比直接的函数调用较慢，因为它防止了对间接呼叫本身之外程序开销的许多编译器优化[2]。在性能关键的代码中，人们常常会想限制这种动态行为。
+在 Swift 中，动态调度默认通过一个 vtable[1]（虚函数表）间接调用。如果使用一个 `dynamic` 关键字来声明，Swift 将会通过 Objective-C 消息转发来调用。这两种情况中，这种情况会比直接的函数调用较慢，因为它防止了对间接呼叫本身之外程序开销的许多编译器优化[2]。在性能关键的代码中，人们常常会想限制这种动态行为。
 
 ### Advice: Use 'final' when you know the declaration does not need to be overridden
 ### 建议：当你知道声明不需要被重写时使用 final
@@ -140,7 +140,7 @@ func usingD(_ d: D) {
 
 > Applying the private or fileprivate keywords to a declaration restricts the visibility of the declaration to the file in which it is declared. This allows the compiler to be able to ascertain all other potentially overriding declarations. Thus the absence of any such declarations enables the compiler to infer the final keyword automatically and remove indirect calls for methods and field accesses accordingly. For instance in the following, e.doSomething() and f.myPrivateVar, will be able to be accessed directly assuming E, F do not have any overriding declarations in the same file:
 
-将 private 关键词用在一个声明上，会限制对其进行了声明的文件的可见性。这会让编辑器有能力甄别出所有其它潜在的覆盖声明。如此，由于没有了任何这样的声明，使得编译器可以自动地推断出 `final` 关键词，并据此去掉对方面的间接调用和属性的访问。例如在如下的 `e.doSomething()`  和 `f.myPrivateVar` 中，就将可以被直接访问，假定在同一个文件中，E, F 并没有任何覆盖的声明：
+将 `private` 关键词用在一个声明上，会限制对其进行了声明的文件的可见性。这会让编辑器有能力甄别出所有其它潜在的覆盖声明。如此，由于没有了任何这样的声明，使得编译器可以自动地推断出 `final` 关键词，并据此去掉对方面的间接调用和属性的访问。例如在如下的 `e.doSomething()`  和 `f.myPrivateVar` 中，就将可以被直接访问，假定在同一个文件中，E, F 并没有任何覆盖的声明：
 
 ````swift
 private class E {
