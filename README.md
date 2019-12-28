@@ -422,7 +422,7 @@ final class Node {
 ### 建议：使用未托管的引用避免引用计数的负荷
 
 > Note, `Unmanaged<T>._withUnsafeGuaranteedRef` is not a public API and will go away in the future. Therefore, don't use it in code that you can not change in the future.
-  
+
 注意：`Unmanaged<T>._withUnsafeGuaranteedRef` 是私有的 API，可能会在将来被移除，请不要在不能修改的代码中使用。
 
 > In performance-critical code you can choose to use unmanaged references. The `Unmanaged<T>` structure allows developers to disable automatic reference counting for a specific reference.
@@ -430,6 +430,8 @@ final class Node {
 在效率至上的代码中你可以选择使用未托管的引用。`Unmanaged<T>` 结构体允许开发者对特别的引用关闭引用计数。
 
 > When you do this, you need to make sure that there exists another reference to instance held by the Unmanaged struct instance for the duration of the use of Unmanaged (see Unmanaged.swift for more details) that keeps the instance alive.
+
+在执行此操作时，需要确保在使用 `Unmanaged` 的过程中存在另一个对 `Unmanaged` 实例持有的实例的引用（更多详细信息请参见 Unmanaged.swift），以使该实例保持活动状态。
 
 ````swift
 // The call to ``withExtendedLifetime(Head)`` makes sure that the lifetime of
