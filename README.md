@@ -103,14 +103,14 @@ func usingAnA(_ a: A) {
 
 > In Swift, dynamic dispatch defaults to indirect invocation through a vtable [1]. If one attaches the dynamic keyword to the declaration, Swift will emit calls via Objective-C message send instead. In both cases this is slower than a direct function call because it prevents many compiler optimizations [2] in addition to the overhead of performing the indirect call itself. In performance critical code, one often will want to restrict this dynamic behavior.
 
-在 Swift 中，动态调度默认通过一个 vtable[1]（虚函数表）间接调用。如果使用一个 `dynamic` 关键字来声明，Swift 将会通过 Objective-C 消息转发来调用。这两种情况中，这种情况会比直接的函数调用较慢，因为它防止了对间接呼叫本身之外程序开销的许多编译器优化[2]。在性能关键的代码中，人们常常会想限制这种动态行为。
+在 Swift 中，动态调度默认通过一个 vtable[1]（虚函数表）间接调用。如果使用一个 `dynamic` 关键字来声明，Swift 将会通过 Objective-C 消息转发来调用。这两种情况中，这种情况会比直接的函数调用较慢，因为它禁止了除间接调用之外的许多编译器优化[2]。在性能严苛的代码中，人们常常会想限制这种动态行为。
 
 ### Advice: Use 'final' when you know the declaration does not need to be overridden
 ### 建议：当你知道声明不需要被重写时使用 final
 
 > The final keyword is a restriction on a declaration of a class, a method, or a property such that the declaration cannot be overridden. This implies that the compiler can emit direct function calls instead of indirect calls. For instance in the following C.array1 and D.array1 will be accessed directly [3]. In contrast, D.array2 will be called via a vtable:
 
-`final` 关键字是一个类、一个方法、或一个属性声明中的一个限制，使得这样的声明不得被重写。这意味着编译器可以呼叫直接的函数调用代替间接调用。例如下面的 `C.array1` 和 `D.array1` 将会被直接[3]访问。与之相反，`D.array2` 将通过一个虚函数表访问：
+`final` 关键字是一个类、一个方法、或一个属性声明中的一个限制，使得这样的声明不得被重写。这意味着编译器直接调用而不是间接调用。例如下面的 `C.array1` 和 `D.array1` 将会被直接[3]访问。与之相反，`D.array2` 将通过一个虚函数表访问：
 
 ````swift
 final class C {
@@ -167,14 +167,14 @@ func usingF(_ f: F) -> Int {
 
 > An important feature provided by the Swift standard library are the generic containers Array and Dictionary. This section will explain how to use these types in a performant manner.
 
-通用的容器 Array 和 Dictionary 是有 Swift 标准库提供的一个重要的功能特性。本节将介绍如何用一种高性能的方式使用这些类型。
+通用的容器 `Array` 和 `Dictionary` 是有 Swift 标准库提供的一个重要的功能特性。本节将介绍如何用一种高性能的方式使用这些类型。
 
 ### Advice: Use value types in Array
 ### 建议：在数组中使用值类型
 
 > In Swift, types can be divided into two different categories: value types (structs, enums, tuples) and reference types (classes). A key distinction is that value types cannot be included inside an NSArray. Thus when using value types, the optimizer can remove most of the overhead in Array that is necessary to handle the possibility of the array being backed an NSArray.
 
-在 Swift 中，类型可以分为不同的两类：值类型（结构体，枚举，元组）和引用类型（类）。一个关键的区分是 NSArray 不能含有值类型。因此当使用值类型时，优化器就不需要去处理对 NSArray 的支持，从而可以在数组上省去大部分消耗。
+在 Swift 中，类型可以分为不同的两类：值类型（结构体，枚举，元组）和引用类型（类）。一个关键的区分是 `NSArray` 不能含有值类型。因此当使用值类型时，优化器就不需要去处理对 `NSArray` 的支持，从而可以在数组上省去大部分消耗。
 
 > Additionally, in contrast to reference types, value types only need reference counting if they contain, recursively, a reference type. By using value types without reference types, one can avoid additional retain, release traffic inside Array.
 
@@ -191,14 +191,14 @@ var a: [PhonebookEntry]
 ````
 > Keep in mind that there is a trade-off between using large value types and using reference types. In certain cases, the overhead of copying and moving around large value types will outweigh the cost of removing the bridging and retain/release overhead.
 
-记住要在使用大值类型和使用引用类型之间做好权衡。在某些情况下，拷贝和移动大值类型数据的消耗要大于移除桥接和持有/释放的消耗。
+记住要在使用大的值类型和使用引用类型之间做好权衡。在某些情况下，拷贝和移动大值类型数据的消耗的性能要大于移除桥接和持有/释放。
 
 ### Advice: Use ContiguousArray with reference types when NSArray bridging is unnecessary
-### 建议：当 NSArray 桥接不必要时，使用 ContiguousArray 存储引用类型
+### 建议：当 `NSArray` 桥接不必要时，使用 `ContiguousArray` 存储引用类型
 
 > If you need an array of reference types and the array does not need to be bridged to NSArray, use ContiguousArray instead of Array:
 
-如果你需要一个引用类型的数组，而且数组不需要桥接到 NSArray 时，使用 ContiguousArray 替代 Array：
+如果你需要一个引用类型的数组，而且数组不需要桥接到 `NSArray` 时，使用 `ContiguousArray` 替代 `Array`：
 
 ````swift
 class C { ... }
@@ -206,7 +206,7 @@ var a: ContiguousArray<C> = [C(...), C(...), ..., C(...)]
 ````
 
 ### Advice: Use inplace mutation instead of object-reassignment
-### 建议：使用适当的改变而不是对象分配
+### 建议：使用内置的修改方法而不是对象再分配
 
 > All standard library containers in Swift are value types that use COW (copy-on-write) [^4] to perform copies instead of explicit copies. In many cases this allows the compiler to elide unnecessary copies by retaining the container instead of performing a deep copy. This is done by only copying the underlying container if the reference count of the container is greater than 1 and the container is mutated. For instance in the following, no copying will occur when d is assigned to c, but when d undergoes structural mutation by appending 2, d will be copied and then 2 will be appended to d:
 
@@ -275,7 +275,7 @@ for i in 0 ... n {
 
 > Swift provides a very powerful abstraction mechanism through the use of generic types. The Swift compiler emits one block of concrete code that can perform MySwiftFunc<T> for any T. The generated code takes a table of function pointers and a box containing T as additional parameters. Any differences in behavior between MySwiftFunc<Int> and MySwiftFunc<String> are accounted for by passing a different table of function pointers and the size abstraction provided by the box. An example of generics:
   
-Swift 通过泛型类型的使用，提供了一个非常强大的抽象机制 。Swift 编译器发出一个可以对任何 T 执行 `MySwiftFunc<T>` 的具体的代码块。生成的代码需要一个函数指针表和一个包含 T 的盒子作为额外的参数。`MySwiftFunc<Int>` 和 `MySwiftFunc<String>` 之间的不同的行为通过传递不同的函数指针表和通过盒子提供的抽象大小来说明。一个泛型的例子：
+Swift 通过泛型类型的使用，提供了一个非常强大的抽象机制。Swift 编译器发出一个可以对任何 T 执行 `MySwiftFunc<T>` 的具体的代码块。生成的代码需要一个函数指针表和一个包含 T 的盒子作为额外的参数。`MySwiftFunc<Int>` 和 `MySwiftFunc<String>` 之间的不同的行为通过传递不同的函数指针表和通过盒子提供的抽象大小来说明。一个泛型的例子：
 
 ````swift
 class MySwiftFunc<T> { ... }
