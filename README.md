@@ -38,15 +38,15 @@
 
 第一个应该做的事情就是启用优化。Swift 提供了三种不同的优化级别：
 
-> - -Onone: This is meant for normal development. It performs minimal optimizations and preserves all debug info.
-> - -O: This is meant for most production code. The compiler performs aggressive optimizations that can drastically change the type and amount of emitted code. Debug information will be emitted but will be lossy.
-> - -Ounchecked: This is a special optimization mode meant for specific libraries or applications where one is willing to trade safety for performance. The compiler will remove all overflow checks as well as some implicit type checks. This is not intended to be used in general since it may result in undetected memory safety issues and integer overflows. Only use this if you have carefully reviewed that your code is safe with respect to integer overflow and type casts.
-> - -Osize: This is a special optimization mode where the compiler prioritizes code size over performance.
+> - `-Onone`: This is meant for normal development. It performs minimal optimizations and preserves all debug info.
+> - `-O`: This is meant for most production code. The compiler performs aggressive optimizations that can drastically change the type and amount of emitted code. Debug information will be emitted but will be lossy.
+> - `-Ounchecked`: This is a special optimization mode meant for specific libraries or applications where one is willing to trade safety for performance. The compiler will remove all overflow checks as well as some implicit type checks. This is not intended to be used in general since it may result in undetected memory safety issues and integer overflows. Only use this if you have carefully reviewed that your code is safe with respect to integer overflow and type casts.
+> - `-Osize`: This is a special optimization mode where the compiler prioritizes code size over performance.
 
-- -Onone: 这意味着正常的开发。它执行最小优化和保存所有调试信息。
-- -O: 这意味着对于大多数生产代码。编译器执行积极地优化，可以大大改变提交代码的类型和数量。调试信息将被省略但还是会有损害的。
-- -Ounchecked: 这是一个特殊的优化模式，它意味着特定的库或应用程序，这是以安全性来交换的。编译器将删除所有溢出检查以及一些隐式类型检查。这不是在通常情况下使用的，因为它可能会导致内存安全问题和整数溢出。如果你仔细审查你的代码，那么对整数溢出和类型转换来说是安全的。
-- -Osize: 这是一个特殊的优化模式，牺牲性能以换取更小的代码大小。 
+- `-Onone`: 这意味着正常的开发。它执行最小优化和保存所有调试信息。
+- `-O`: 这意味着对于大多数生产代码。编译器执行积极地优化，可以大大改变提交代码的类型和数量。调试信息将被省略但还是会有损害的。
+- `-Ounchecked`: 这是一个特殊的优化模式，它意味着特定的库或应用程序，这是以安全性来交换的。编译器将删除所有溢出检查以及一些隐式类型检查。这不是在通常情况下使用的，因为它可能会导致内存安全问题和整数溢出。如果你仔细审查你的代码，那么对整数溢出和类型转换来说是安全的。
+- `-Osize`: 这是一个特殊的优化模式，牺牲性能以换取更小的代码大小。 
 
 > In the Xcode UI, one can modify the current optimization level as follows:
 
@@ -59,7 +59,7 @@
 
 > By default Swift compiles each file individually. This allows Xcode to compile multiple files in parallel very quickly. However, compiling each file separately prevents certain compiler optimizations. Swift can also compile the entire program as if it were one file and optimize the program as if it were a single compilation unit. This mode is enabled using the swiftc command line flag -whole-module-optimization. Programs that are compiled in this mode will most likely take longer to compile, but may run faster.
 
-默认情况下 Swift 单独编译每个文件。这使得 Xcode 可以非常快速的并行编译多个文件。然而，分开编译每个文件可以预防某些编译器优化。Swift 也可以犹如它是一个文件一样编译整个程序，犹如就好像它是一个单一的编译单元一样优化这个程序。这个模式可以使用命令行 flag-whole-module-optimization 来激活。在这种模式下编译的程序将最最有可能需要更长时间来编译，单可以运行得更快。
+默认情况下 Swift 单独编译每个文件。这使得 Xcode 可以非常快速的并行编译多个文件。然而，分开编译每个文件可以预防某些编译器优化。Swift 也可以犹如它是一个文件一样编译整个程序，犹如就好像它是一个单一的编译单元一样优化这个程序。这个模式可以使用命令行 `flag-whole-module-optimization` 来激活。在这种模式下编译的程序将最最有可能需要更长时间来编译，单可以运行得更快。
 
 > This mode can be enabled using the Xcode build setting 'Whole Module Optimization'.
 
@@ -77,7 +77,7 @@ Swift 在默认情况下是一个类似 Objective-C 的非常动态的语言。�
 
 > Classes use dynamic dispatch for methods and property accesses by default. Thus in the following code snippet, a.aProperty, a.doSomething() and a.doSomethingElse() will all be invoked via dynamic dispatch:
 
-类使用动态调度的方法和默认的属性访问。因此在下面的代码片段中，a.aProperty、a.doSomething() 和 a.doSomethingElse() 都将通过动态调度来调用：
+类使用动态调度的方法和默认的属性访问。因此在下面的代码片段中，`a.aProperty`、`a.doSomething()` 和 `a.doSomethingElse()` 都将通过动态调度来调用：
 
 ````swift
 class A {
@@ -110,7 +110,7 @@ func usingAnA(_ a: A) {
 
 > The final keyword is a restriction on a declaration of a class, a method, or a property such that the declaration cannot be overridden. This implies that the compiler can emit direct function calls instead of indirect calls. For instance in the following C.array1 and D.array1 will be accessed directly [3]. In contrast, D.array2 will be called via a vtable:
 
-final 关键字是一个类、一个方法、或一个属性声明中的一个限制，使得这样的声明不得被重写。这意味着编译器可以呼叫直接的函数调用代替间接调用。例如下面的 C.array1 和 D.array1 将会被直接[3]访问。与之相反，D.array2 将通过一个虚函数表访问：
+`final` 关键字是一个类、一个方法、或一个属性声明中的一个限制，使得这样的声明不得被重写。这意味着编译器可以呼叫直接的函数调用代替间接调用。例如下面的 `C.array1` 和 `D.array1` 将会被直接[3]访问。与之相反，`D.array2` 将通过一个虚函数表访问：
 
 ````swift
 final class C {
@@ -140,7 +140,7 @@ func usingD(_ d: D) {
 
 > Applying the private or fileprivate keywords to a declaration restricts the visibility of the declaration to the file in which it is declared. This allows the compiler to be able to ascertain all other potentially overriding declarations. Thus the absence of any such declarations enables the compiler to infer the final keyword automatically and remove indirect calls for methods and field accesses accordingly. For instance in the following, e.doSomething() and f.myPrivateVar, will be able to be accessed directly assuming E, F do not have any overriding declarations in the same file:
 
-将 private 关键词用在一个声明上，会限制对其进行了声明的文件的可见性。这会让编辑器有能力甄别出所有其它潜在的覆盖声明。如此，由于没有了任何这样的声明，使得编译器可以自动地推断出 final 关键词，并据此去掉对方面的间接调用和属性的访问。例如在如下的 e.doSomething()  和 f.myPrivateVar 中，就将可以被直接访问，假定在同一个文件中，E, F 并没有任何覆盖的声明：
+将 private 关键词用在一个声明上，会限制对其进行了声明的文件的可见性。这会让编辑器有能力甄别出所有其它潜在的覆盖声明。如此，由于没有了任何这样的声明，使得编译器可以自动地推断出 `final` 关键词，并据此去掉对方面的间接调用和属性的访问。例如在如下的 `e.doSomething()`  和 `f.myPrivateVar` 中，就将可以被直接访问，假定在同一个文件中，E, F 并没有任何覆盖的声明：
 
 ````swift
 private class E {
@@ -234,7 +234,7 @@ a = append_one(a)
 
 > a may be copied [5] despite the version of a without one appended to it has no uses after append_one due to the assignment. This can be avoided through the usage of inout parameters:
 
-尽管由于分配，a 的版本没有任何改变 ，在 append_one 后也没有使用 ，  但 a 也许会被拷贝。这可以通过使用 inout 参数来避免这个问题：
+尽管由于分配，a 的版本没有任何改变 ，在 `append_one` 后也没有使用，但 a 也许会被拷贝。这可以通过使用 `inout` 参数来避免这个问题：
 
 ````swift
 func append_one_in_place(a: inout [Int]) {
@@ -275,7 +275,7 @@ for i in 0 ... n {
 
 > Swift provides a very powerful abstraction mechanism through the use of generic types. The Swift compiler emits one block of concrete code that can perform MySwiftFunc<T> for any T. The generated code takes a table of function pointers and a box containing T as additional parameters. Any differences in behavior between MySwiftFunc<Int> and MySwiftFunc<String> are accounted for by passing a different table of function pointers and the size abstraction provided by the box. An example of generics:
   
-Swift 通过泛型类型的使用，提供了一个非常强大的抽象机制 。Swift 编译器发出一个可以对任何 T 执行 MySwiftFunc<T> 的具体的代码块。生成的代码需要一个函数指针表和一个包含 T 的盒子作为额外的参数。MySwiftFunc<Int> 和 MySwiftFunc<String> 之间的不同的行为通过传递不同的函数指针表和通过盒子提供的抽象大小来说明。一个泛型的例子：
+Swift 通过泛型类型的使用，提供了一个非常强大的抽象机制 。Swift 编译器发出一个可以对任何 T 执行 `MySwiftFunc<T>` 的具体的代码块。生成的代码需要一个函数指针表和一个包含 T 的盒子作为额外的参数。`MySwiftFunc<Int>` 和 `MySwiftFunc<String>` 之间的不同的行为通过传递不同的函数指针表和通过盒子提供的抽象大小来说明。一个泛型的例子：
 
 ````swift
 class MySwiftFunc<T> { ... }
@@ -322,7 +322,7 @@ myAlgorithm(arrayOfInts, arrayOfInts.length)
 
 > In Swift, values keep a unique copy of their data. There are several advantages to using value-types, like ensuring that values have independent state. When we copy values (the effect of assignment, initialization, and argument passing) the program will create a new copy of the value. For some large values these copies could be time consuming and hurt the performance of the program.
 
-在 swift 语言中，值类型保存它们数据独有的一份拷贝。使用值类型有很多优点，比如值类型具有独立的状态。当我们拷贝值类型时（相当于复制，初始化参数传递等操作），程序会创建值类型的一个拷贝。对于大的值类型，这种拷贝时很耗费时间的，可能会影响到程序的性能。
+在 Swift 语言中，值类型保存它们数据独有的一份拷贝。使用值类型有很多优点，比如值类型具有独立的状态。当我们拷贝值类型时（相当于复制，初始化参数传递等操作），程序会创建值类型的一个拷贝。对于大的值类型，这种拷贝时很耗费时间的，可能会影响到程序的性能。
 
 > Consider the example below that defines a tree using "value" nodes. The tree nodes contain other nodes using a protocol. In computer graphics scenes are often composed from different entities and transformations that can be represented as values, so this example is somewhat realistic.
 
@@ -408,7 +408,7 @@ struct Box<T> {
 
 > Swift classes are always reference counted. The Swift compiler inserts code that increments the reference count every time the object is accessed. For example, consider the problem of scanning a linked list that's implemented using classes. Scanning the list is done by moving a reference from one node to the next: elem = elem.next. Every time we move the reference Swift will increment the reference count of the next object and decrement the reference count of the previous object. These reference count operations are expensive and unavoidable when using Swift classes.
 
-Swift 语言的类都是采用引用计数进行内存管理的。Swift 编译器会在每次对象被访问的时候插入增加引用计数的代码。例如，考虑一个遍历使用类实现的一个链表的例子。遍历链表是通过移动引用到链表的下一个节点来完成的：elem = elem.next，每次移动这个引用，Swift 都要增加 next 对象的引用计数并减少前一个对象的引用计数，这种引用计数代价昂贵但是只要使用 swift 类就无法避免。
+Swift 语言的类都是采用引用计数进行内存管理的。Swift 编译器会在每次对象被访问的时候插入增加引用计数的代码。例如，考虑一个遍历使用类实现的一个链表的例子。遍历链表是通过移动引用到链表的下一个节点来完成的：`elem = elem.next`，每次移动这个引用，Swift 都要增加 next 对象的引用计数并减少前一个对象的引用计数，这种引用计数代价昂贵但是只要使用 Swift 类就无法避免。
 
 ````swift
 final class Node {
@@ -421,13 +421,13 @@ final class Node {
 ### advice: Use unmanaged references to avoid reference counting overhead
 ### 建议：使用未托管的引用避免引用计数的负荷
 
-> Note, Unmanaged<T>._withUnsafeGuaranteedRef is not a public API and will go away in the future. Therefore, don't use it in code that you can not change in the future.
+> Note, `Unmanaged<T>._withUnsafeGuaranteedRef` is not a public API and will go away in the future. Therefore, don't use it in code that you can not change in the future.
   
-注意：Unmanaged<T>._withUnsafeGuaranteedRef 是私有的 API，可能会在将来被移除，请不要在不能修改的代码中使用。
+注意：`Unmanaged<T>._withUnsafeGuaranteedRef` 是私有的 API，可能会在将来被移除，请不要在不能修改的代码中使用。
 
-> In performance-critical code you can choose to use unmanaged references. The Unmanaged<T> structure allows developers to disable automatic reference counting for a specific reference.
+> In performance-critical code you can choose to use unmanaged references. The `Unmanaged<T>` structure allows developers to disable automatic reference counting for a specific reference.
 
-在效率至上的代码中你可以选择使用未托管的引用。Unmanaged<T>结构体允许开发者对特别的引用关闭引用计数
+在效率至上的代码中你可以选择使用未托管的引用。`Unmanaged<T>` 结构体允许开发者对特别的引用关闭引用计数。
 
 > When you do this, you need to make sure that there exists another reference to instance held by the Unmanaged struct instance for the duration of the use of Unmanaged (see Unmanaged.swift for more details) that keeps the instance alive.
 
