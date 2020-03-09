@@ -64,7 +64,7 @@
 
 > This mode can be enabled using the Xcode build setting 'Whole Module Optimization'.
 
-这个模式可以通过 XCode 构建设置中的“Whole Module Optimization”来激活。
+这个模式可以通过 Xcode 构建设置中的“Whole Module Optimization”来激活。
 
 ## Reducing Dynamic Dispatch
 ## 降低动态调度
